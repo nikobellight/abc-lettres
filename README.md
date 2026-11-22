@@ -2,7 +2,9 @@
 
 Application pour apprendre à écrire les lettres de l'alphabet, en français et en anglais, sur tablette.
 
-- 26 majuscules, en 4 étapes par lettre : regarder, suivre la route, ramasser les objets, écrire tout seul
+- Menu avec 4 modules : majuscules A-Z, minuscules a-z (script, sur 4 lignes d'écriture), chiffres 0-10, jeux
+- 4 étapes par lettre ou chiffre : regarder, suivre la route, ramasser les objets, écrire tout seul
+- Jeux : bulles, images, grande lettre / petite lettre, compter
 - Un personnage différent à chaque lettre, des étoiles par étape, des autocollants à collectionner
 - Voix enregistrées : Siwis (Piper) en français, Heart (Kokoro) en anglais
 - Fonctionne hors ligne une fois installée sur l'écran d'accueil
