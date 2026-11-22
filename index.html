@@ -1142,7 +1142,7 @@ let fsTried=false;
 document.addEventListener('pointerdown',()=>{ac();if(fsTried)return;fsTried=true;const d=document.documentElement;if(d.requestFullscreen&&!document.fullscreenElement){try{d.requestFullscreen().catch(()=>{});}catch(e){}}},{capture:true});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopVoice();});
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){try{navigator.serviceWorker.register('sw.js').catch(()=>{});}catch(e){}}
-window.__abc={MOD,sample:sampleStroke,get P(){return P;},get S(){return S;},get AUD(){return AUD;},start:L=>startLetter(L)};
+window.__abc={MOD,sample:sampleStroke,get talking(){return talking();},get VE(){return VOICE_END;},get P(){return P;},get S(){return S;},get AUD(){return AUD;},start:L=>startLetter(L)};
 }
 </script>
 </body>
