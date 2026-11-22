@@ -16,7 +16,7 @@ PHRASES = json.load(open(os.path.join(ROOT, 'tools', 'phrases.json'), encoding='
 
 CANDIDATES = {
     'fr': ['fr-FR-EloiseNeural', 'fr-FR-DeniseNeural', 'fr-FR-VivienneMultilingualNeural',
-           'fr-FR-RemyMultilingualNeural', 'fr-FR-HenriNeural', 'fr-FR-JosephineNeural'],
+           'fr-FR-RemyMultilingualNeural', 'fr-FR-HenriNeural'],
     'en': ['en-US-AnaNeural', 'en-US-JennyNeural', 'en-US-AvaMultilingualNeural', 'en-US-AriaNeural'],
 }
 SAMPLE_KEYS = ['L_B', 's1', 'stepDone', 's4', 'F_S', 'NL_3']
@@ -68,10 +68,14 @@ async def samples(rate):
         for lang, voices in CANDIDATES.items():
             for voice in voices:
                 parts = []
-                for i, key in enumerate(SAMPLE_KEYS):
-                    p = os.path.join(tmp, f'{voice}_{i}.mp3')
-                    await synth(PHRASES[lang][key], voice, rate, p)
-                    parts += [to_wave(p), np.zeros(int(SR * .7), dtype=np.float32)]
+                try:
+                    for i, key in enumerate(SAMPLE_KEYS):
+                        p = os.path.join(tmp, f'{voice}_{i}.mp3')
+                        await synth(PHRASES[lang][key], voice, rate, p)
+                        parts += [to_wave(p), np.zeros(int(SR * .7), dtype=np.float32)]
+                except RuntimeError as e:
+                    print('skipped voice', voice, e)
+                    continue
                 name = voice.split('-')[2].replace('Neural', '').replace('Multilingual', '')
                 encode(normalize(np.concatenate(parts)), os.path.join(out, f'{lang}-{name}.mp3'))
                 print('sample', lang, voice)
