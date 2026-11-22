@@ -422,7 +422,7 @@ function rndNot(list,prev){if(list.length<2)return list[0];let x;do{x=rnd(list);
 let AC=null;
 function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended'){try{AC.resume();}catch(e){}}return AC;}
 /* mixer: effects and voices go through their own gain, then a limiter, so both stay audible without distortion */
-let BUS=null;const VOX_LEVEL={fr:.75,en:1.45};
+let BUS=null;const VOX_LEVEL={fr:1,en:1};
 function bus(){const a=ac();if(!a)return null;
  if(!BUS){const comp=a.createDynamicsCompressor();comp.threshold.value=-12;comp.knee.value=8;comp.ratio.value=5;comp.attack.value=.003;comp.release.value=.2;comp.connect(a.destination);
   const sfx=a.createGain();sfx.gain.value=2.8;sfx.connect(comp);const vox=a.createGain();vox.gain.value=VOX_LEVEL[S.lang]||1;vox.connect(comp);BUS={sfx,vox};}
