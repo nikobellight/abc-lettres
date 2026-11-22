@@ -1,0 +1,17 @@
+{
+  "name": "Mes lettres ABC",
+  "short_name": "ABC",
+  "description": "Apprendre à écrire les lettres en français et en anglais",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#5bb8ff",
+  "theme_color": "#4aa8ff",
+  "lang": "fr",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
