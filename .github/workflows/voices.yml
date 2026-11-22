@@ -1,0 +1,67 @@
+name: Voices
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "samples = test sentences for each candidate voice; full = all phrases for the app"
+        required: true
+        default: samples
+        type: choice
+        options: [samples, full]
+      fr_voice:
+        description: "French voice (full mode)"
+        required: false
+        default: fr-FR-EloiseNeural
+      en_voice:
+        description: "English voice (full mode)"
+        required: false
+        default: en-US-AnaNeural
+      rate:
+        description: "Speaking speed, e.g. -8% (slower) or +0%"
+        required: false
+        default: "-8%"
+  push:
+    branches: [main]
+    paths: [".github/workflows/voices.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: voices
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q edge-tts soundfile numpy
+
+      - name: Generate
+        run: |
+          MODE="${{ github.event.inputs.mode || 'samples' }}"
+          python tools/gen_voices.py "$MODE" \
+            --fr "${{ github.event.inputs.fr_voice || 'fr-FR-EloiseNeural' }}" \
+            --en "${{ github.event.inputs.en_voice || 'en-US-AnaNeural' }}" \
+            --rate="${{ github.event.inputs.rate || '-8%' }}"
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A voice-samples audio sw.js 2>/dev/null || true
+          if git diff --cached --quiet; then echo "Nothing new"; exit 0; fi
+          git commit -m "Voices: ${{ github.event.inputs.mode || 'samples' }} (${{ github.event.inputs.fr_voice || 'fr-FR-EloiseNeural' }}, ${{ github.event.inputs.en_voice || 'en-US-AnaNeural' }})"
+          git pull --rebase origin main
+          git push

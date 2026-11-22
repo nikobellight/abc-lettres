@@ -421,9 +421,15 @@ function rndNot(list,prev){if(list.length<2)return list[0];let x;do{x=rnd(list);
 /* ================= sound effects, vibration ================= */
 let AC=null;
 function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended'){try{AC.resume();}catch(e){}}return AC;}
-function tone(f,d=.12,type='sine',v=.15,when=0,to){if(!S.sound)return;const a=ac();if(!a)return;const t0=a.currentTime+when;
+/* mixer: effects and voices go through their own gain, then a limiter, so both stay audible without distortion */
+let BUS=null;const VOX_LEVEL={fr:.75,en:1.45};
+function bus(){const a=ac();if(!a)return null;
+ if(!BUS){const comp=a.createDynamicsCompressor();comp.threshold.value=-12;comp.knee.value=8;comp.ratio.value=5;comp.attack.value=.003;comp.release.value=.2;comp.connect(a.destination);
+  const sfx=a.createGain();sfx.gain.value=2.8;sfx.connect(comp);const vox=a.createGain();vox.gain.value=VOX_LEVEL[S.lang]||1;vox.connect(comp);BUS={sfx,vox};}
+ return BUS;}
+function tone(f,d=.12,type='sine',v=.15,when=0,to){if(!S.sound)return;const a=ac();const B=bus();if(!a||!B)return;const t0=a.currentTime+when;
  const o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(f,t0);if(to)o.frequency.exponentialRampToValueAtTime(to,t0+d);
- g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(v,t0+.01);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.connect(g);g.connect(a.destination);o.start(t0);o.stop(t0+d+.02);}
+ g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(v,t0+.01);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.connect(g);g.connect(B.sfx);o.start(t0);o.stop(t0+d+.02);}
 const SFX={
  tick:p=>tone(420+p*700,.05,'triangle',.04),
  pop:()=>tone(500,.09,'sine',.18,0,1100),
@@ -461,7 +467,8 @@ function say(keys){
  const A=AUD[S.lang],a=ac();
  if(A&&A.ok&&a){let t0=a.currentTime+.05;
   const offs=[],base=t0;
-  for(const k of keys){const sg=A.map[k];if(!sg){offs.push(t0-base);continue;}const src=a.createBufferSource();src.buffer=A.buf;src.connect(a.destination);
+  const B=bus();if(B)B.vox.gain.value=VOX_LEVEL[S.lang]||1;
+  for(const k of keys){const sg=A.map[k];if(!sg){offs.push(t0-base);continue;}const src=a.createBufferSource();src.buffer=A.buf;src.connect(B?B.vox:a.destination);
    src.start(t0,Math.max(0,sg[0]-.02),sg[1]+.1);voiceSrcs.push(src);offs.push(t0-base);t0+=sg[1]+.3;}
   offs.push(t0-base);return offs;}
  if(!('speechSynthesis' in window))return;

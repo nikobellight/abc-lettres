@@ -1,7 +1,7 @@
 /* Offline support for Mes lettres ABC.
    The page itself is fetched network-first so updates arrive; everything else is cache-first.
    Bump VERSION whenever audio or icons change. */
-const VERSION = 'abc-v4';
+const VERSION = 'abc-v5';
 const CORE = [
   './',
   'index.html',
