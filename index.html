@@ -439,8 +439,8 @@ const learned=()=>Object.keys(MOD).flatMap(learnedIn);
 const isOpen=L=>{const it=MOD[modOf(L)].items,i=it.indexOf(L);return S.unlockAll||i===0||starsOf(it[i-1])>0||starsOf(L)>0;};
 function itemInfo(id){const m=modOf(id);
  if(m==='num'){const n=+id,w=NUMW[S.lang][n],objs=n?NOBJ[n].repeat(n):NOBJ[0];
-  return {m,word:w,em:n?NOBJ[n]:NOBJ[0],title:`<b>${id}</b> <span class="objs">${objs}</span>`,win:`<span style="font-size:${n>5?44:70}px;line-height:1.2">${objs}</span>`,intro:'NL_'+n,winKey:'NW_'+n,s1:'s1n',s4:'s4n',name:'NN_'+n,quiz:'ON_'+n,ask:'askN'};}
- const [w,em]=wd(id);const U=id.toUpperCase();return {m,word:w,em,title:`<b>${id}</b> ${em} ${esc(w)}`,win:em,intro:'L_'+U,winKey:'W_'+U,s1:'s1',s4:'s4',name:'N_'+U,quiz:'O_'+U,ask:'askL'};}
+  return {m,word:w,em:n?NOBJ[n]:NOBJ[0],title:`<b>${id}</b> <span class="objs">${objs}</span>`,win:`<span style="font-size:${n>5?44:70}px;line-height:1.2">${objs}</span>`,intro:'NL_'+n,winKey:'NW_'+n,s1:'s1n',s4:'s4n',name:'LNN_'+n,quiz:'ON_'+n,ask:'askN'};}
+ const [w,em]=wd(id);const U=id.toUpperCase();return {m,word:w,em,title:`<b>${id}</b> ${em} ${esc(w)}`,win:em,intro:'L_'+U,winKey:'W_'+U,s1:'s1',s4:'s4',name:'LN_'+U,quiz:'O_'+U,ask:'askL'};}
 const $=id=>document.getElementById(id);
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -768,7 +768,7 @@ function startLetter(L){
 }
 $('playSay').addEventListener('click',()=>{if(!P)return;sayStage();});
 function sayStage(){if(!P)return;const I=P.info;
- if(P.phase==='done'){say([I.name,'stepDone']);return;}
+ if(P.phase==='done'){say('stepDone');return;}
  if(P.phase==='quiz'){say(I.quiz);return;}
  if(P.phase==='speak'){say(I.ask);return;}
  say(P.stage===1?[I.intro,I.s1]:[I.name,P.stage===4?I.s4:'s'+P.stage]);}
@@ -822,7 +822,7 @@ function updateAnim(now){const A=P.anim;if(!A)return;const pts=P.strokes[A.si],n
  if(tt>=1){P.anim=null;if(A.cb)A.cb();}}
 function strokeDone(){const pts=P.strokes[P.si];const [x,y]=toScreen(...pts[pts.length-1]);burst(x,y,14,200,'sparkle');SFX.ding();vib(30);
  P.si++;P.k=0;P.tracing=false;P.touched=false;P.failsStroke=0;P.offPath=false;P.showRoad=false;P.dirUntil=0;P.lastProg=performance.now();
- if(P.si<P.strokes.length){P.hsi=P.si;P.hk=0;say(P.info.name);}
+ if(P.si<P.strokes.length){P.hsi=P.si;P.hk=0;}
  if(P.si>=P.strokes.length)stageDone();}
 function stageStars(){const n=P.stage;
  if(n===1)return P.miss===0?3:P.miss<=2?2:1;
@@ -831,9 +831,9 @@ function stageStars(){const n=P.stage;
  const s=(P.fails4+P.hints4)/Math.max(1,P.rep+1);return s<=1?3:s<=3?2:1;}
 function stageDone(){P.locked=true;P.phase='done';P.hop=performance.now();SFX.stage();const [x,y]=toScreen(50,50);burst(x,y,30,380,'star');
  const st=P.stage,me=P;
- if(st===4&&P.rep+1<S.repeat){say([P.info.name,'p'+Math.floor(Math.random()*5)]);setTimeout(()=>{if(P!==me)return;P.rep++;resetStage(4);P.phase='active';P.locked=false;},1500);return;}
+ if(st===4&&P.rep+1<S.repeat){say('p'+Math.floor(Math.random()*5));setTimeout(()=>{if(P!==me)return;P.rep++;resetStage(4);P.phase='active';P.locked=false;},1500);return;}
  const stars=stageStars();P.stars[st-1]=stars;stageDots();
- say([P.info.name,'stepDone']);
+ say(['p'+Math.floor(Math.random()*5),'stepDone']);
  setTimeout(()=>{if(P!==me)return;showDoneCard(stars);},900);}
 
 /* ================= quiz: "where is the b?" ================= */
@@ -846,7 +846,7 @@ function startQuiz(){P.phase='quiz';P.locked=true;clearInk();const L=P.L,m=P.mod
  $('card').classList.remove('on');void $('card').offsetWidth;$('card').classList.add('on');sayStage();}
 $('cChoices').addEventListener('click',e=>{const b=e.target.closest('.qbtn');if(!b||!P||P.phase!=='quiz')return;ac();const v=b.dataset.q;
  if(v===P.L){P.phase='quizOk';b.classList.add('good');const r=b.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2,24,320,'star');SFX.ding();vib(30);
-  say(['p'+Math.floor(Math.random()*5),P.info.name]);const me=P;afterVoice(()=>{if(P!==me)return;startSpeak();},400);}
+  say('p'+Math.floor(Math.random()*5));const me=P;afterVoice(()=>{if(P!==me)return;startSpeak();},400);}
  else{b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');SFX.boop();vib(60);say(P.mod==='num'?'NN_'+v:'T_'+v.toUpperCase());}});
 
 /* ================= "say it" step with speech recognition ================= */
@@ -887,7 +887,7 @@ function listen(){if(!P||P.phase!=='speak'||REC)return;let alts=[],err=null,done
  const finish=()=>{if(done)return;done=true;REC=null;$('cMic').classList.remove('listening');if(P!==me||P.phase!=='speak')return;
   if(err&&['not-allowed','service-not-allowed','network','audio-capture','language-not-supported'].includes(err)){letterDone();return;}
   if(heardRight(alts)){P.phase='spoken';const big=$('cBig');if(big)big.classList.add('ok');const r=$('card').getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2,40,420,'star');SFX.ding();vib(40);
-   say(['p'+Math.floor(Math.random()*5),P.info.name]);afterVoice(()=>{if(P===me)letterDone();},300);return;}
+   say('p'+Math.floor(Math.random()*5));afterVoice(()=>{if(P===me)letterDone();},300);return;}
   P.sayTries++;SFX.boop();
   if(P.sayTries<2){say('retry');afterVoice(()=>{if(P===me&&P.phase==='speak')listen();},150);}
   else{P.phase='spoken';say(['itIs',P.info.name]);afterVoice(()=>{if(P===me)letterDone();},400);}};
