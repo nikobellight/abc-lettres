@@ -21,6 +21,9 @@ CANDIDATES = {
 }
 SAMPLE_KEYS = ['L_B', 's1', 'stepDone', 's4', 'F_S', 'NL_3']
 SR = 24000
+# questions the child must answer: slower so a 5-year-old can follow
+SLOW_PREFIXES = ('O_', 'ON_', 'F_', 'ML_')
+SLOW_RATE = '-25%'
 GAP = 0.35
 
 
@@ -91,7 +94,7 @@ async def full(fr_voice, en_voice, rate):
             parts.append(lead); pos += len(lead)
             for n, (key, text) in enumerate(PHRASES[lang].items()):
                 p = os.path.join(tmp, f'{lang}_{n}.mp3')
-                await synth(text, voice, rate, p)
+                await synth(text, voice, SLOW_RATE if key.startswith(SLOW_PREFIXES) else rate, p)
                 a = to_wave(p)
                 mp[key] = [round(pos / SR, 4), round(len(a) / SR, 4)]
                 gap = np.zeros(int(SR * GAP), dtype=np.float32)
