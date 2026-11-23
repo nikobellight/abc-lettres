@@ -387,6 +387,8 @@ const WORDS={
  V:{en:['violin','🎻'],fr:['vélo','🚲']},W:{en:['whale','🐳'],fr:['wagon','🚃']},X:{en:['xylophone','🎶'],fr:['xylophone','🎶']},
  Y:{en:['yo-yo','🪀'],fr:['yoyo','🪀']},Z:{en:['zebra','🦓'],fr:['zèbre','🦓']}
 };
+/* picture-game words: several per letter, first one is the main word */
+const GW={"fr":{"A":[["avion","✈️"],["ananas","🍍"],["arbre","🌳"],["abeille","🐝"]],"B":[["ballon","🎈"],["banane","🍌"],["bateau","⛵"],["bus","🚌"]],"C":[["camion","🚚"],["canard","🦆"],["carotte","🥕"],["cadeau","🎁"]],"D":[["dauphin","🐬"],["dragon","🐉"],["dé","🎲"],["dinosaure","🦖"]],"E":[["étoile","⭐"],["éléphant","🐘"],["escargot","🐌"],["écureuil","🐿️"]],"F":[["fraise","🍓"],["fleur","🌸"],["fusée","🚀"],["feu","🔥"]],"G":[["gâteau","🎂"],["gorille","🦍"],["guitare","🎸"],["gant","🧤"]],"H":[["hibou","🦉"],["hélicoptère","🚁"],["hamburger","🍔"],["hérisson","🦔"]],"I":[["île","🏝️"],["iguane","🦎"],["insecte","🐞"]],"J":[["jus","🧃"],["jupe","👗"],["jongleur","🤹"],["jean","👖"]],"K":[["koala","🐨"],["kangourou","🦘"],["kiwi","🥝"],["karaté","🥋"]],"L":[["lune","🌙"],["lion","🦁"],["lapin","🐰"],["loup","🐺"]],"M":[["maison","🏠"],["mouton","🐑"],["moto","🏍️"],["main","✋"]],"N":[["nuage","☁️"],["nez","👃"],["nid","🪺"],["nœud","🎀"]],"O":[["orange","🍊"],["ours","🐻"],["olive","🫒"],["ordinateur","💻"]],"P":[["pomme","🍎"],["poisson","🐟"],["poule","🐔"],["papillon","🦋"]],"Q":[["quatre","4️⃣"],["quilles","🎳"]],"R":[["robot","🤖"],["renard","🦊"],["raisin","🍇"],["requin","🦈"]],"S":[["soleil","☀️"],["serpent","🐍"],["sapin","🎄"],["souris","🐭"]],"T":[["tortue","🐢"],["tomate","🍅"],["train","🚂"],["tigre","🐯"]],"U":[["usine","🏭"],["ustensiles","🍴"]],"V":[["vélo","🚲"],["vache","🐄"],["volcan","🌋"],["voiture","🚗"]],"W":[["wagon","🚃"]],"X":[["xylophone","🎶"]],"Y":[["yoyo","🪀"],["yaourt","🥛"]],"Z":[["zèbre","🦓"],["zéro","0️⃣"]]},"en":{"A":[["apple","🍎"],["ant","🐜"],["alligator","🐊"],["ambulance","🚑"]],"B":[["bear","🐻"],["ball","⚽"],["banana","🍌"],["bus","🚌"]],"C":[["cat","🐱"],["car","🚗"],["cake","🍰"],["cow","🐄"]],"D":[["dog","🐶"],["duck","🦆"],["drum","🥁"],["dinosaur","🦖"]],"E":[["elephant","🐘"],["egg","🥚"],["elf","🧝"],["envelope","✉️"]],"F":[["fish","🐟"],["frog","🐸"],["fox","🦊"],["flower","🌸"]],"G":[["grapes","🍇"],["goat","🐐"],["guitar","🎸"],["gift","🎁"]],"H":[["house","🏠"],["horse","🐴"],["hat","🎩"],["heart","❤️"]],"I":[["ice cream","🍦"],["iguana","🦎"],["island","🏝️"]],"J":[["juice","🧃"],["jeans","👖"],["juggler","🤹"],["jar","🫙"]],"K":[["kite","🪁"],["key","🔑"],["kangaroo","🦘"],["king","🤴"]],"L":[["lion","🦁"],["lemon","🍋"],["leaf","🍃"],["ladybug","🐞"]],"M":[["moon","🌙"],["monkey","🐵"],["mouse","🐭"],["milk","🥛"]],"N":[["nose","👃"],["nest","🪺"],["nut","🥜"],["necklace","📿"]],"O":[["octopus","🐙"],["orange","🍊"],["ox","🐂"],["olive","🫒"]],"P":[["pizza","🍕"],["pig","🐷"],["pear","🍐"],["penguin","🐧"]],"Q":[["queen","👑"],["question","❓"]],"R":[["rainbow","🌈"],["rabbit","🐰"],["robot","🤖"],["rocket","🚀"]],"S":[["snake","🐍"],["sun","☀️"],["star","⭐"],["sock","🧦"]],"T":[["tiger","🐯"],["tree","🌳"],["turtle","🐢"],["train","🚂"]],"U":[["umbrella","☂️"],["unicorn","🦄"],["up","⬆️"]],"V":[["violin","🎻"],["van","🚐"],["volcano","🌋"],["vase","🏺"]],"W":[["whale","🐳"],["watermelon","🍉"],["watch","⌚"],["wolf","🐺"]],"X":[["xylophone","🎶"]],"Y":[["yo-yo","🪀"],["yarn","🧶"]],"Z":[["zebra","🦓"],["zero","0️⃣"]]}};
 const STICKERS=['🦄','🐲','🦖','🚀','🦊','🐼','🐸','🐙','🦋','🐞','🐢','🦕','🐳','🦁','🐯','🐵','🦉','🦜','🍩','🍭','🌈','🚒','🚂','🛸','🏎️','🚁','⚽','🎸','🧸','🐬'];
 const BRUSHES=[{id:'rainbow',ic:'🌈',need:0},{id:'glitter',ic:'✨',need:2},{id:'stars',ic:'⭐',need:4},{id:'bubbles',ic:'🫧',need:7},{id:'neon',ic:'💡',need:10}];
 const HEROES=['car','train','caterpillar','snake','rocket','bee','fish'];
@@ -1077,20 +1079,23 @@ function bubbleGame(area){
   bubbles=bubbles.filter(b=>{b.y-=b.sp*dt;b.ph+=dt*2;const x=b.x+Math.sin(b.ph)*14;const tr=`translate(${x}px,${b.y}px)`;b.el.style.setProperty('--t',tr);if(!b.el.classList.contains('wob'))b.el.style.transform=tr;if(b.y<-b.size-10){b.el.remove();return false;}return true;});}};
 }
 function findGame(area){
- const pool=gamePool('find'),rounds=5;let r=0,target=null,busy=false,lastT=null;progDots(rounds,0);
+ const pool=gamePool('find');let r=0,busy=false,cur=null;
+ const cands=[];pool.forEach(L=>(GW[S.lang][L]||[[...wd(L)]]).forEach((w,j)=>cands.push({L,j,w:w[0],em:w[1]})));
+ cands.sort(()=>Math.random()-.5);
+ const seq=[],rest=cands.slice();while(rest.length){let i=rest.findIndex(c=>!seq.length||c.L!==seq[seq.length-1].L);if(i<0)i=0;seq.push(rest.splice(i,1)[0]);}
+ const rounds=Math.min(5,seq.length);progDots(rounds,0);
  area.innerHTML='<div class="findWrap"><div class="findEmoji" id="fE"></div><div class="findWord" id="fW"></div><div class="cards" id="fC"></div></div>';
- const sayIt=()=>say('Q_'+target);
- function round(){busy=false;do{target=rnd(pool);}while(pool.length>1&&target===lastT);lastT=target;const [w,em]=wd(target);
-  const others=ORDER.filter(x=>x!==target).sort(()=>Math.random()-.5).slice(0,2);const opts=[target,...others].sort(()=>Math.random()-.5);
-  $('fE').textContent=em;$('fW').innerHTML=`<b>?</b>${esc(w.slice(1))}`;$('fC').innerHTML=opts.map(o=>`<button class="card vgate" data-l="${o}">${o}</button>`).join('');sayIt();}
+ const sayIt=()=>say(`GQ_${cur.L}_${cur.j}`);
+ function round(){busy=false;cur=seq[r];const L=cur.L;
+  const others=ORDER.filter(x=>x!==L).sort(()=>Math.random()-.5).slice(0,2);const opts=[L,...others].sort(()=>Math.random()-.5);
+  $('fE').textContent=cur.em;$('fW').innerHTML=`<b>?</b>${esc(cur.w.slice(1))}`;$('fC').innerHTML=opts.map(o=>`<button class="card vgate" data-l="${o}">${o}</button>`).join('');sayIt();}
  $('fC').addEventListener('click',e=>{const b=e.target.closest('.card');if(!b||busy||!G)return;const l=b.dataset.l;
-  if(l===target){busy=true;b.classList.add('good');const [w]=wd(target);$('fW').innerHTML=`<b>${esc(w[0])}</b>${esc(w.slice(1))}`;const r2=b.getBoundingClientRect();burst(r2.left+r2.width/2,r2.top+r2.height/2,24,320,'star');SFX.ding();vib(30);
-   say('L_'+target);r++;progDots(rounds,r);setTimeout(()=>{if(!G)return;if(r>=rounds)gameWin();else round();},2800);}
+  if(l===cur.L){busy=true;b.classList.add('good');$('fW').innerHTML=`<b>${esc(cur.w[0])}</b>${esc(cur.w.slice(1))}`;const r2=b.getBoundingClientRect();burst(r2.left+r2.width/2,r2.top+r2.height/2,24,320,'star');SFX.ding();vib(30);
+   say(`GA_${cur.L}_${cur.j}`);r++;progDots(rounds,r);afterVoice(()=>{if(!G)return;if(r>=rounds)gameWin();else round();},700);}
   else{b.classList.remove('bad');void b.offsetWidth;b.classList.add('bad');SFX.boop();vib(60);say('T_'+l);}});
  round();
  return {say:sayIt,tick(){}};
 }
-
 function matchGame(area){
  const pool=gamePool('match'),rounds=5;let r=0,target=null,busy=false,lastT=null;progDots(rounds,0);
  area.innerHTML='<div class="findWrap"><div class="bigGlyph" id="mG"></div><div class="cards" id="mC"></div></div>';
