@@ -22,7 +22,7 @@ CANDIDATES = {
 SAMPLE_KEYS = ['L_B', 's1', 'stepDone', 's4', 'F_S', 'NL_3']
 SR = 24000
 # questions the child must answer: slower so a 5-year-old can follow
-SLOW_PREFIXES = ('O_', 'ON_', 'F_', 'ML_')
+SLOW_PREFIXES = ('O_', 'ON_', 'F_', 'ML_', 'GQ_')
 SLOW_RATE = '-25%'
 GAP = 0.35
 
